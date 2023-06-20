@@ -1,0 +1,27 @@
+version: '3'
+services:
+  www:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: apache
+    volumes:
+      - .:/var/www/html
+    ports:
+      - 8080:80
+  db:
+    image: mysql:latest
+    container_name: mysql
+    environment:
+      - MYSQL_DATABASE=myDatabase
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_ALLOW_EMPTY_PASSWORD=1
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      - PMA_HOST=db
+      - PMA_PORT=3306
+    ports:
+      - 8001:80
